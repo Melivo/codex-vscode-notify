@@ -55,4 +55,5 @@ PY
 echo "Patch angewendet: ${EXTENSION_JS}"
 echo "Backup erstellt: ${BACKUP_FILE}"
 echo "Benachrichtigungstext: ${MESSAGE}"
+echo "Benachrichtigung nur, wenn VS Code / Code OSS gerade nicht fokussiert ist."
 echo "VS Code / Code OSS danach einmal neu laden."

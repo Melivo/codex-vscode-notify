@@ -39,7 +39,7 @@ Der Patch haengt eine Desktopbenachrichtigung an fertige Codex-Turns:
 - Titel: `Codex`
 - Text: `Durchlauf fertig, bereit fuer neue Eingaben`
 
-Die Benachrichtigung wird nur gesendet, wenn das VS-Code-Fenster nicht fokussiert ist.
+Die Benachrichtigung wird nur gesendet, wenn das VS Code / Code OSS-Fenster gerade nicht fokussiert ist.
 
 ## Hinweis
 
