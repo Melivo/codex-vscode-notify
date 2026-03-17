@@ -9,7 +9,7 @@ Die installierte Codex-Erweiterung (`openai.chatgpt`) erzeugt intern bereits ein
 Dieses Repo liefert einen kleinen, rueckbaubaren Workaround:
 
 - vorhandene Codex-Erweiterung finden
-- lokalen Patch fuer `notify-send` auf den bestehenden `turn/completed`-Hook anwenden
+- lokalen Patch fuer einen verfuegbaren Linux-Benachrichtigungsbefehl auf den bestehenden `turn/completed`-Hook anwenden
 - Patch bei Bedarf wieder sauber entfernen
 
 ## Voraussetzungen
@@ -38,7 +38,7 @@ Der Patch haengt eine Desktopbenachrichtigung an fertige Codex-Turns:
 
 - Titel: `Codex`
 - Text: `Durchlauf fertig, bereit fuer neue Eingaben`
-- Befehl: bevorzugt `notify-send`, faellt lokal sonst auf `kdialog` zurueck
+- Befehl: bevorzugt `notify-send`, faellt lokal sonst auf `kdialog` zurueck und schreibt den gewaehlten absoluten Pfad in den Patch
 
 Die Benachrichtigung wird nur gesendet, wenn das VS Code / Code OSS-Fenster gerade nicht fokussiert ist.
 

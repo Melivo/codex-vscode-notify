@@ -13,7 +13,7 @@ Nutzer
   -> Patch-/Restore-Skript
     -> lokale Codex-Erweiterung
       -> bestehender turn/completed-Hook
-        -> notify-send
+        -> lokaler Linux-Benachrichtigungsbefehl
 ```
 
 ## Verantwortlichkeiten

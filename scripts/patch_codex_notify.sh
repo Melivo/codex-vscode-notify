@@ -5,15 +5,22 @@ EXTENSIONS_DIR="${HOME}/.vscode/extensions"
 PATTERN="openai.chatgpt-*-linux-x64/out/extension.js"
 MESSAGE='Durchlauf fertig, bereit fuer neue Eingaben'
 OLD='Y.method==="turn/completed"&&E.emit("turnComplete")'
+NOTIFIER_LABEL=''
+NOTIFIER_PATH=''
+NEW=''
 
 resolve_notifier_patch() {
   if command -v notify-send >/dev/null 2>&1; then
-    printf '%s' 'Y.method==="turn/completed"&&(E.emit("turnComplete"),ot.window.state.focused||fv.execFile("notify-send",["Codex","Durchlauf fertig, bereit fuer neue Eingaben"]))'
+    NOTIFIER_LABEL='notify-send'
+    NOTIFIER_PATH="$(command -v notify-send)"
+    NEW="Y.method===\"turn/completed\"&&(E.emit(\"turnComplete\"),ot.window.state.focused||fv.execFile(\"${NOTIFIER_PATH}\",[\"Codex\",\"Durchlauf fertig, bereit fuer neue Eingaben\"]))"
     return
   fi
 
   if command -v kdialog >/dev/null 2>&1; then
-    printf '%s' 'Y.method==="turn/completed"&&(E.emit("turnComplete"),ot.window.state.focused||fv.execFile("kdialog",["--title","Codex","--passivepopup","Durchlauf fertig, bereit fuer neue Eingaben","5"]))'
+    NOTIFIER_LABEL='kdialog'
+    NOTIFIER_PATH="$(command -v kdialog)"
+    NEW="Y.method===\"turn/completed\"&&(E.emit(\"turnComplete\"),ot.window.state.focused||fv.execFile(\"${NOTIFIER_PATH}\",[\"--title\",\"Codex\",\"--passivepopup\",\"Durchlauf fertig, bereit fuer neue Eingaben\",\"5\"]))"
     return
   fi
 
@@ -36,7 +43,7 @@ find_extension_file() {
 
 EXTENSION_JS="$(find_extension_file)"
 BACKUP_FILE="${EXTENSION_JS}.bak"
-NEW="$(resolve_notifier_patch)"
+resolve_notifier_patch
 
 if [[ ! -f "${EXTENSION_JS}" ]]; then
   echo "Datei nicht gefunden: ${EXTENSION_JS}" >&2
@@ -76,10 +83,6 @@ PY
 echo "Patch angewendet: ${EXTENSION_JS}"
 echo "Backup erstellt: ${BACKUP_FILE}"
 echo "Benachrichtigungstext: ${MESSAGE}"
-if command -v notify-send >/dev/null 2>&1; then
-  echo "Benachrichtigungsbefehl: notify-send"
-elif command -v kdialog >/dev/null 2>&1; then
-  echo "Benachrichtigungsbefehl: kdialog"
-fi
+echo "Benachrichtigungsbefehl: ${NOTIFIER_LABEL} (${NOTIFIER_PATH})"
 echo "Benachrichtigung nur, wenn VS Code / Code OSS gerade nicht fokussiert ist."
 echo "VS Code / Code OSS danach einmal neu laden."
